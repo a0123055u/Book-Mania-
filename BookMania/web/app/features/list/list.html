@@ -1,7 +1,7 @@
 <div class="container-fluid">
-	<div class="row" ng-repeat="book in vm.booklist">
-		<div class="col-xs-4">{{book.bookName}}</div>
-		<div class="col-xs-4">{{book.contactDetails}}</div>
-		<div class="col-xs-4">{{book.price}}</div>
+	<div class="row" ng-repeat="book in vm.booklist" ng-click="vm.bookDetails(book)">
+		<div class="col-xs-4 text-center">{{book.bookName}}</div>
+		<div class="col-xs-4 text-center">{{book.contactDetails}}</div>
+		<div class="col-xs-4 text-center">{{book.price}}</div>
 	</div>
 </div>

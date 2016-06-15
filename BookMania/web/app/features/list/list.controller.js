@@ -11,6 +11,10 @@
     function BookListController() {
         var vm = this;
 
+        vm.bookDetails = function bookDetails(book) {
+            console.dir(book);
+        };
+
         init();
 
         /////////////////
