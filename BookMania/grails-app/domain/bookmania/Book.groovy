@@ -5,7 +5,7 @@ class Book {
 	String name
     	String author
     	String category
-    	String dity
+    	String city
     	String isbn
     	String publisher
     	int copy
