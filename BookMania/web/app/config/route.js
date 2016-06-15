@@ -13,8 +13,10 @@
     
     	$stateProvider
 		    .state('list', {
-		      	url: "/list",
-		      	templateUrl: "features/list/list.html"
+		      	url: '/list',
+		      	templateUrl: 'features/list/list.html',
+		      	controller: 'BookListController',
+		      	controllerAs: 'vm'
 	    	});
 
 	}

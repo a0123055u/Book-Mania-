@@ -5,11 +5,12 @@
     angular
         .module('bm', [
             // 'ngAnimate',
-            'ui.router'
+            'ui.router',
 
             // Component
 
             // Features
+            'bm.list'
         ]);
 
 }());
