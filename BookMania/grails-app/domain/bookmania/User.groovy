@@ -5,7 +5,8 @@ class User {
 	String name
         String email
         int phoneNumber
-        String City
+        String city
+        String password
 	 
 
     static constraints = {
