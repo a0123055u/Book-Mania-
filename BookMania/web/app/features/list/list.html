@@ -1,1 +1,7 @@
-<div>Tests</div>
+<div class="container-fluid">
+	<div class="row" ng-repeat="book in vm.booklist">
+		<div class="col-xs-4">{{book.bookName}}</div>
+		<div class="col-xs-4">{{book.contactDetails}}</div>
+		<div class="col-xs-4">{{book.price}}</div>
+	</div>
+</div>

@@ -10,6 +10,7 @@ var clean = require('gulp-clean');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
+var templatecache = require('gulp-angular-templatecache');
 
 var path = {
   js: [
@@ -39,28 +40,38 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('fail'));
 });
 gulp.task('clean', function() {
-    gulp.src(['./build/css/*.css', './build/*.js'])
-      .pipe(clean({force: true}));
+  return gulp.src(['./build/css/*.css', './build/*.js'])
+    .pipe(clean({force: true}));
 });
 gulp.task('minify-css', function() {
-  gulp.src(['./app/**/*.css'])
+  return gulp.src(['./app/**/*.css'])
     .pipe(gulp.dest('./build/'))
     .pipe(connect.reload());
 });
 gulp.task('vendorjs', function () {
-    gulp.src(path.vendorjs)
-      .pipe(uglify())
-      .pipe(concat('vendor.min.js'))
-      .pipe(gulp.dest('./build/'));
+  return gulp.src(path.vendorjs)
+    .pipe(uglify())
+    .pipe(concat('vendor.min.js'))
+    .pipe(gulp.dest('./build/'));
 });
 gulp.task('browserify', function() {
-  gulp.src(path.js)
-  .pipe(concat('bundled.js'))
-  .pipe(gulp.dest('./build/'))
-  .pipe(connect.reload());
+  return gulp.src(path.js)
+    .pipe(concat('bundled.js'))
+    .pipe(gulp.dest('./build/'))
+    .pipe(connect.reload());
+});
+gulp.task('templatecache', function () {
+  return gulp.src(path.html)
+    .pipe(templatecache('templates.js', {
+        module: 'bm',
+        standalone: false,
+        root: 'app/'
+    }))
+    .pipe(gulp.dest('./build/'))
+    .pipe(connect.reload());
 });
 gulp.task('connect', function () {
-  connect.server({
+  return connect.server({
     root: 'app',
     port: 8100,
     livereload: true,
@@ -76,14 +87,15 @@ gulp.task('connect', function () {
 gulp.task('watch', function() {
   gulp.watch(path.js, ['browserify']);
   gulp.watch(path.css, ['minify-css']);
+  gulp.watch(path.html, ['templatecache']);
 });
 
 // *** default task *** //
-gulp.task('default', ['build', 'connect', 'watch']);
+gulp.task('default', ['build', 'watch', 'connect']);
 // *** build task *** //
 gulp.task('build', function() {
   runSequence(
     ['clean'],
-    [/*'lint',*/ 'minify-css', 'vendorjs', 'browserify']
+    [/*'lint',*/ 'minify-css', 'vendorjs', 'templatecache', 'browserify']
   );
 });
